@@ -80,8 +80,8 @@ describe Board do
     let(:board) {described_class.new }
     let(:grid) { board.instance_variable_get(:@grid) }
     it 'Returns true if 4 tokens in a row diagonally' do
-      4.times { |i| grid[i][i] = 'X'}
-      expect(board.check_diagonal_left('X', 0, 0)).to be_truthy
+      4.times { |i| grid[i][i] = '|X|'}
+      expect(board.check_diagonal_right('|X|', 0, 0)).to be_truthy
     end
   end
 
@@ -89,9 +89,17 @@ describe Board do
     let(:board) {described_class.new }
     let(:grid) { board.instance_variable_get(:@grid) }
     it 'Returns true if 4 tokens in a row diagonally' do
-      4.times { |i| grid[3 - ai][i] = 'X'}
-      expect(board.check_diagonal_right('X', 0, 0)).to be_truthy
+      4.times { |i| grid[3 - i][i] = '|X|'}
+
+      expect(board.check_diagonal_left('|X|', 0, 0)).to be_truthy
     end
   end
-
+  describe '#won?' do
+    let(:board) { described_class.new }
+    let(:grid) { board.instance_variable_get(:@grid) }
+    it 'Checks middle part of board' do
+      4.times { |i| grid[1 + i][1 + i] = '|X|'}
+      expect(board.won?('|X|')).to be_truthy
+    end
+  end
 end
