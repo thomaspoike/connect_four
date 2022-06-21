@@ -67,7 +67,6 @@ class Board
     false
   end
 
-
   # Check diagonal right win
   def check_diagonal_right(token, row, column)
     count = 0
@@ -107,21 +106,32 @@ class Board
       end
     end
   end
-  
 
   # Any winner?
   def won?(token)
+    return true if check_diagonal(token, 0, 0)
 
-    
+    (0..6).each do |j|
+      (0..2).each do |i|
+        return true if check_vertical(token, i, j)
+      end
+    end
+    (0..5).each do |j| 
+      (0..3).each do |i|
+        return true if check_horizontal(token, j, i)
+      end
+    end
   end
-
 end
 
 board = Board.new
 
 board.place_token(0, '|X|')
 board.place_token(0, '|X|')
-board.print_grid
+board.place_token(0, '|X|')
+board.place_token(0, '|X|')
+
+p board.won?('|X|')
 
 =begin
     if column_full?(column)
