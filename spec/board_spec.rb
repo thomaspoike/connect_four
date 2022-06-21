@@ -57,4 +57,41 @@ describe Board do
       expect(index).to be_nil
     end
   end
+
+  describe '#check_horizontal' do
+    let(:board) { described_class.new }
+
+    it 'Returns true if 4 tokens in a row horizontally' do
+      (0..3).each { |i| board.place_token(i, 'X') }
+      expect(board.check_horizontal('X', 0, 0)).to be_truthy
+    end
+  end
+
+  describe '#check_vertical' do
+    let(:board) { described_class.new }
+
+    it 'Returns true if 4 tokens in a row vertically' do
+      (0..3).each { |i| board.place_token(0, 'X') }
+      expect(board.check_vertical('X', 0, 0)).to be_truthy
+    end
+  end
+
+  describe '#check_diagonal_left' do
+    let(:board) {described_class.new }
+    let(:grid) { board.instance_variable_get(:@grid) }
+    it 'Returns true if 4 tokens in a row diagonally' do
+      4.times { |i| grid[i][i] = 'X'}
+      expect(board.check_diagonal_left('X', 0, 0)).to be_truthy
+    end
+  end
+
+  describe '#check_diagonal_right' do
+    let(:board) {described_class.new }
+    let(:grid) { board.instance_variable_get(:@grid) }
+    it 'Returns true if 4 tokens in a row diagonally' do
+      4.times { |i| grid[3 - ai][i] = 'X'}
+      expect(board.check_diagonal_right('X', 0, 0)).to be_truthy
+    end
+  end
+
 end

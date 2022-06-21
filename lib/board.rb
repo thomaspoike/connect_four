@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Logic for Connect four board game
 class Board
   attr_reader :grid_width, :grid_height, :grid
 
@@ -65,6 +66,55 @@ class Board
 
     false
   end
+
+
+  # Check diagonal right win
+  def check_diagonal_right(token, row, column)
+    count = 0
+    (0..3).each do |i|
+      if @grid[row + i][column + i] == token
+        count += 1
+      else
+        return false
+      end
+    end
+    return true if count == 4
+
+    false
+  end
+
+  # Check diagonal left win
+  def check_diagonal_left(token, row, column)
+    count = 0
+    (0..3).each do |i|
+      if @grid[row + i][3 + column - i] == token
+        count += 1
+      else
+        return false
+      end
+    end
+    return true if count == 4
+
+    false
+  end
+
+  # Checks diagonal win
+  def check_diagonal(token, row, column)
+    (0..2).each do |j|
+      (0..3).each do |i|
+        return true if check_diagonal_right(token, row + j, column + i)
+        return true if check_diagonal_left(token, row + j, column + i)
+      end
+    end
+  end
+  
+
+  # Any winner?
+  def won?(token)
+
+    
+  end
+
 end
 
 board = Board.new
